@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
-from PIL import Image, ImageTkimport
+from PIL import Image, ImageTk
 import os
 import random
 import json
@@ -13,5 +13,3 @@ FLAG_DIR = "flags"
 
 # creating a list of world regions
 regions = ["Africa", "Asia", "Caribbean", "Europe", "North America", "Oceania", "South America"]
-
-
