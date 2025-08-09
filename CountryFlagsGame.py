@@ -3,6 +3,7 @@ from tkinter import ttk
 from tkinter import messagebox
 import tkinter.font as tkFont
 from PIL import Image, ImageTk
+import pygame
 import os
 import random
 import json
@@ -122,8 +123,8 @@ class CountryFlagsGame:
         ttk.Label(input_frame, text="Number of Questions:", font=("System", 10)).grid(row=0, column=2, padx=50)  # create and postion label for number of questions
 
         # add OptionMenu for number of questions
-        self.num_questions_var = tk.StringVar(value="10")   # set default value for number of questions to 10
-        self.num_of_questions = tk.OptionMenu(input_frame, self.num_questions_var, "10", "20", "30")    # create OptionMenu whose result is stored in self.num_questions_var
+        self.num_questions_var = tk.StringVar(value="5")   # set default value for number of questions to 10
+        self.num_of_questions = tk.OptionMenu(input_frame, self.num_questions_var, "5", "10", "20", "30")    # create OptionMenu whose result is stored in self.num_questions_var
         self.num_of_questions.grid(row=1, column=2, pady=5, sticky="s") # add and position OptionMenu
         self.num_of_questions.config(font=(("System", 10))) # set font of default value
         self.num_of_questions["menu"].config(font=("System", 10))   # set font of options
@@ -164,19 +165,19 @@ class CountryFlagsGame:
     def generate_series(self, max_value):
         # handle cases where max_value is less than 10
         if max_value < 10:
-            return [str(max_value)] # return a list with one option: max_value
+            return [str(max_value)] # return a list with 1 option: max_value
         
         # handle cases where max_value is between 10 and 20 (exclusive)
         if max_value < 20:
-            return [str(10), str(max_value)]    # return a list with two options: 10 and max_value
+            return [str(5), str(10), str(max_value)]    # return a list with 3 options: 5, 10, and max_value
         
         # base series for values greater than or equal to 20
-        base_series = [10, 20, 30]  # list of base options
+        base_series = [5, 10, 20, 30]  # list of base options
 
         # handle case where max_value is less than or equal to the last element in base_series
         if max_value <= base_series[-1]:
-            # create a series with values from base_series that are less than or equal to max_value
-            series = [x for x in base_series if x <= max_value]
+            # create a series with values from base_series that are less than max_value
+            series = [x for x in base_series if x < max_value]
 
             # append max_value to the series
             series.append(max_value)
@@ -184,8 +185,8 @@ class CountryFlagsGame:
             # extend the base series to include max_value
             series = base_series + [max_value]
 
-        # ensure the series contains no more than four elements
-        while len(series) > 4:
+        # ensure the series contains no more than five elements
+        while len(series) > 5:
             series.pop(0)   # discard the first element in the series
         
         return [str(num) for num in series] # return the series as strings
@@ -234,6 +235,9 @@ class CountryFlagsGame:
             messagebox.showerror("ERROR", "Select a Region!")   # display error message
             return
         
+        # play music
+        self.start_music()
+        
         # get questions for selected region, data is already randomized
         num_questions = int(self.num_questions_var.get())   # get number of questions
         self.get_countries_by_region(selected_region, num_questions)    # populate self.countries_dict with countries in the selected region 
@@ -255,14 +259,14 @@ class CountryFlagsGame:
             # region found in dictionary
             region_data = copy.deepcopy(self.data[region_name]) # make a deep copy of that region's data
 
-            # continue populating self.countries_dict until num_questions_left is 0
+            # populate self.countries_dict with countries in the selected region
             for _ in range(len(region_data) + 1):
                 # check if region_data is empty
                 if not region_data:
                     # region_data is empty
                     break   # exit for loop
                 
-                count = len(region_data)    # get current number of countries in selected region
+                count = len(region_data)    # get current number of countries in region_data
 
                 index = random.randint(0, count-1)  # generate a random index
 
@@ -271,13 +275,6 @@ class CountryFlagsGame:
                 self.countries_dict[item["country_code"]] = item["country_name"] # map item's country code to its country name in self.countries_dict
 
                 region_data.pop(index)  # remove the country at the specified index from region_data (prevent duplicates)
-
-                num_questions_left -= 1  # decrement number of remaining questions
-
-                # check if questions still need to be generated
-                if num_questions_left == 0:
-                    # no more questions left
-                    break   # exit for loop
         else:
             # region does not exist, return an empty dictionary
             return {}
@@ -304,8 +301,6 @@ class CountryFlagsGame:
                 except Exception as e:
                     # exception is thrown
                     print(f"Error loading image {filename}: {e}")   # print error message
-        
-        self.total_flags = len(self.flags)  # get number of flags
     
 
     def start_new_challenge(self):
@@ -375,6 +370,9 @@ class CountryFlagsGame:
 
 
     def show_final_score(self):
+        # stop music
+        self.stop_music()
+
         num_questions = int(self.num_questions_var.get())   # get number of questions
         percentage = (self.score / num_questions) * 100 # calculate score as a percentage
         messagebox.showinfo("Quiz Completed", f"Final Score: {self.score}/{num_questions}\nPercentage: {percentage:.2f}%")  # display that quiz was completed and stats
@@ -420,6 +418,9 @@ class CountryFlagsGame:
 
 
     def reset_quiz(self):
+        # stop music
+        self.stop_music()
+
         self.flag_label.grid_forget()   # hide self.flag_label
 
         # reset values
@@ -427,7 +428,8 @@ class CountryFlagsGame:
         self.current_question = 0   # set current question to 0
         self.region_combo.set("Select a Region")    # reset to default text
         self.num_answers_var.set(value=4)    # reset to default option
-        self.num_questions_var.set(value=10) # reset to default option
+        self.num_questions_var.set(value=5) # reset to default option
+        self.update_option_menu(30) # reset to default option menu
         self.hide_buttons() # hide all button
         self.update_score_board()   # update score board
 
@@ -439,6 +441,16 @@ class CountryFlagsGame:
         self.button3.config(bg="SystemButtonFace")
         self.button4.config(bg="SystemButtonFace")
 
+
+    def start_music(self):
+        pygame.mixer.init() # initialize mixer
+        music_file = "Jump Up, Super Star! Music Box Version.mp3"  # path to music fil
+        pygame.mixer.music.load(music_file) # load mixer with music file
+        pygame.mixer.music.play(-1) # loop music file continuously
+
+
+    def stop_music(self):
+        pygame.mixer.music.stop()   # stop music
 
 if __name__ == "__main__":
     root = tk.Tk()  # create main window
