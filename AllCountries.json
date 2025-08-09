@@ -46,7 +46,7 @@
     },
     {
       "country_code": "CG",
-      "country_name": "Congo"
+      "country_name": "Republic of the Congo"
     },
     {
       "country_code": "CD",
@@ -691,12 +691,8 @@
         "country_name": "Trinidad and Tobago"
     },
     {
-        "country_code": "MS",
-        "country_name": "Montserrat"
-    },
-    {
-        "country_code": "PR",
-        "country_name": "Puerto Rico"
+        "country_code": "KN",
+        "country_name": "Saint Kitts and Nevis"
     }
 	],
   "Caribbean": [
@@ -749,12 +745,8 @@
       "country_name": "Dominica"
     },
     {
-      "country_code": "MS",
-      "country_name": "Montserrat"
-    },
-    {
-      "country_code": "PR",
-      "country_name": "Puerto Rico"
+      "country_code": "KN",
+      "country_name": "Saint Kitts and Nevis"
     }
   ],
   "South America": [
@@ -846,7 +838,7 @@
     },
     {
       "country_code": "FM",
-      "country_name": "Federated States of Micronesia"
+      "country_name": "Micronesia"
     },
     {
       "country_code": "MH",
@@ -863,26 +855,6 @@
     {
       "country_code": "KI",
       "country_name": "Kiribati"
-    },
-    {
-      "country_code": "AS",
-      "country_name": "American Samoa"
-    },
-    {
-      "country_code": "GU",
-      "country_name": "Guam"
-    },
-    {
-      "country_code": "MP",
-      "country_name": "Northern Mariana Islands"
-    },
-    {
-      "country_code": "PN",
-      "country_name": "Pitcairn Islands"
-    },
-    {
-      "country_code": "TK",
-      "country_name": "Tokelau"
     }
   ],
   "All Countries": [
@@ -932,7 +904,7 @@
     },
     {
       "country_code": "CG",
-      "country_name": "Congo"
+      "country_name": "Republic of the Congo"
     },
     {
       "country_code": "CD",
@@ -1331,10 +1303,6 @@
       "country_name": "Croatia"
     },
     {
-      "country_code": "CY",
-      "country_name": "Cyprus"
-    },
-    {
       "country_code": "CZ",
       "country_name": "Czech Republic"
     },
@@ -1571,68 +1539,8 @@
         "country_name": "Trinidad and Tobago"
     },
     {
-        "country_code": "MS",
-        "country_name": "Montserrat"
-    },
-    {
-        "country_code": "PR",
-        "country_name": "Puerto Rico"
-    },
-    {
-      "country_code": "BS",
-      "country_name": "Bahamas"
-    },
-    {
-      "country_code": "BB",
-      "country_name": "Barbados"
-    },
-    {
-      "country_code": "JM",
-      "country_name": "Jamaica"
-    },
-    {
-      "country_code": "HT",
-      "country_name": "Haiti"
-    },
-    {
-      "country_code": "DO",
-      "country_name": "Dominican Republic"
-    },
-    {
-      "country_code": "CU",
-      "country_name": "Cuba"
-    },
-    {
-      "country_code": "TT",
-      "country_name": "Trinidad and Tobago"
-    },
-    {
-      "country_code": "GD",
-      "country_name": "Grenada"
-    },
-    {
-      "country_code": "LC",
-      "country_name": "Saint Lucia"
-    },
-    {
-      "country_code": "VC",
-      "country_name": "Saint Vincent and the Grenadines"
-    },
-    {
-      "country_code": "AG",
-      "country_name": "Antigua and Barbuda"
-    },
-    {
-      "country_code": "DM",
-      "country_name": "Dominica"
-    },
-    {
-      "country_code": "MS",
-      "country_name": "Montserrat"
-    },
-    {
-      "country_code": "PR",
-      "country_name": "Puerto Rico"
+        "country_code": "KN",
+        "country_name": "Saint Kitts and Nevis"
     },
     {
       "country_code": "AR",
@@ -1720,7 +1628,7 @@
     },
     {
       "country_code": "FM",
-      "country_name": "Federated States of Micronesia"
+      "country_name": "Micronesia"
     },
     {
       "country_code": "MH",
@@ -1737,26 +1645,6 @@
     {
       "country_code": "KI",
       "country_name": "Kiribati"
-    },
-    {
-      "country_code": "AS",
-      "country_name": "American Samoa"
-    },
-    {
-      "country_code": "GU",
-      "country_name": "Guam"
-    },
-    {
-      "country_code": "MP",
-      "country_name": "Northern Mariana Islands"
-    },
-    {
-      "country_code": "PN",
-      "country_name": "Pitcairn Islands"
-    },
-    {
-      "country_code": "TK",
-      "country_name": "Tokelau"
     }
   ]
 }
