@@ -376,7 +376,7 @@ class CountryFlagsGame:
         music_file = "songs/congratulations.mp3"  # path to music file
         pygame.mixer.music.load(music_file) # load mixer with music file
         pygame.mixer.music.play(1) # play music file once
-        pygame.mixer.music.fadeout(8500)    # play music file for 9.4 seconds
+        pygame.mixer.music.fadeout(8500)    # play music file for 8.5 seconds
 
         num_questions = int(self.num_questions_var.get())   # get number of questions
         percentage = (self.score / num_questions) * 100 # calculate score as a percentage
