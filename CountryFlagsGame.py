@@ -243,7 +243,7 @@ class CountryFlagsGame:
         
         # get questions for selected region, data is already randomized
         num_questions = int(self.num_questions_var.get())   # get number of questions
-        self.get_countries_by_region(selected_region, num_questions)    # populate self.countries_dict with countries in the selected region 
+        self.get_countries_by_region(selected_region)    # populate self.countries_dict with countries in the selected region (key=country code and value=country name)
 
         # set initial values
         self.current_question = 0   # set current question to 0
@@ -254,7 +254,7 @@ class CountryFlagsGame:
         self.ask_questions(num_questions)   # start asking questionss
 
     
-    def get_countries_by_region(self, region_name, num_questions_left):
+    def get_countries_by_region(self, region_name):
         self.countries_dict = {} # reset dictionary's contents
 
         # check if selected region is in dictionary self.data
@@ -295,7 +295,7 @@ class CountryFlagsGame:
             # check if filename is found in list filenames
             if filename in filenames:
                 try:
-                    # store the code and path to the flag image
+                    # store the code and path to the flag image in a tuple
                     self.flags.append((code, os.path.join(FLAG_DIR, filename)))
                 except Exception as e:
                     # exception is thrown
@@ -325,6 +325,9 @@ class CountryFlagsGame:
         # update score board
         self.update_score_board()
 
+        # re-enable all buttons for normal operation
+        self.enable_buttons()
+
         option_list = []    # list that will store the answer choices
 
         # update question number
@@ -334,7 +337,7 @@ class CountryFlagsGame:
         flag_code, flag_path = self.flags[self.current_question-1]  # get country's code and path and store in flag_code and flag_path respectively
         correct_country = self.countries_dict[flag_code]    # store name of correct country 
 
-        country_list = list(self.countries_dict.values())   # get values (country names) of countries_dict
+        country_list = list(self.countries_dict.values())   # get values (country names) of self.countries_dict
         country_list.remove(correct_country)    # remove the current country from the list
         option_list.append(correct_country) # add the current country to the list of answer choices
 
@@ -356,7 +359,7 @@ class CountryFlagsGame:
 
         # load and display the flag image
         pil_image = Image.open(flag_path)   # load flag image into PIL Image object
-        pil_image = pil_image.resize((650, 420), Image.LANCZOS) # resize image
+        pil_image = pil_image.resize((650, 420), Image.LANCZOS) # resize image and maintain high quality
         self.flag_image = ctk.CTkImage(light_image=pil_image, dark_image=pil_image, size=(650, 420)) # convert PILImage object into CTkImage object to display on CTkinter widget (self.flag_label)
         self.flag_label.configure(image=self.flag_image)    # update label by setting its image to self.flag_image
         self.flag_label.grid(row=2, column=0, columnspan=5, padx=10, pady=5, sticky="n")   # add and position label on window
@@ -385,11 +388,11 @@ class CountryFlagsGame:
 
 
     def check_answer(self, selected_option):
+        # disable all buttons to prevent spamming
+        self.disable_buttons()
+
         # reset all button colors to default color
-        self.button1.configure(fg_color=("#3B8ED0","#1F6AA5"), text_color="white", hover_color="#093254")
-        self.button2.configure(fg_color=("#3B8ED0","#1F6AA5"), text_color="white", hover_color="#093254")
-        self.button3.configure(fg_color=("#3B8ED0","#1F6AA5"), text_color="white", hover_color="#093254")
-        self.button4.configure(fg_color=("#3B8ED0","#1F6AA5"), text_color="white", hover_color="#093254")
+        self.reset_button_colors()
 
         # check if self.correct_answer is a valid index
         if 0 <= self.correct_answer < self.num_answers:
@@ -454,6 +457,22 @@ class CountryFlagsGame:
         self.button2.configure(fg_color=("#3B8ED0","#1F6AA5"), text_color="white", hover_color="#093254")
         self.button3.configure(fg_color=("#3B8ED0","#1F6AA5"), text_color="white", hover_color="#093254")
         self.button4.configure(fg_color=("#3B8ED0","#1F6AA5"), text_color="white", hover_color="#093254")
+
+
+    def enable_buttons(self):
+        # re-enable all buttons for normal function
+        self.button1.configure(state="normal")
+        self.button2.configure(state="normal")
+        self.button3.configure(state="normal")
+        self.button4.configure(state="normal")
+
+
+    def disable_buttons(self):
+        # disable all buttons to prevent spamming
+        self.button1.configure(state="disabled")
+        self.button2.configure(state="disabled")
+        self.button3.configure(state="disabled")
+        self.button4.configure(state="disabled")
 
 
     def start_music(self):
